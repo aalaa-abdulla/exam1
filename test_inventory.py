@@ -175,10 +175,20 @@ def test_calculate_total_sample_products(sample_products):
 # C2: Use @pytest.mark.parametrize to test apply_bulk_discount
 #     with at least 5 different (total, quantity, expected) combos.
 # ============================================================
-
 # TODO: Write your Part C tests here
-
-
+@pytest.mark.parametrize(
+    "sum, quantity, expected_result",
+    [
+        (100, 5, 100),        
+        (200, 10, 190),       
+        (300, 25, 270),       
+        (500, 50, 425),       
+        (99.99, 12, 94.99),   
+    ]
+)
+def test_apply_bulk_discount(sum, quantity, expected_result):
+    result = apply_bulk_discount(sum, quantity)
+    assert result == expected_result
 # ============================================================
 # PART D - Mocking (5 marks)
 # Use @patch to mock _send_restock_alert.
