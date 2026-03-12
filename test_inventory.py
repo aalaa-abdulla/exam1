@@ -115,13 +115,6 @@ def test_list_products():
     prod = list_products()
     assert len(prod) == 2
 
-
-
-
-
-
-
-
 # ============================================================
 # PART B - Exception Testing (12 marks)
 # Write at least 6 tests using pytest.raises.
@@ -130,8 +123,32 @@ def test_list_products():
 # ============================================================
 
 # TODO: Write your Part B tests here
+def test_add_product_empty_ID():
+     with pytest.raises(ValueError,  match="Product ID and name are required"):
+          add_product("", "laptop", 400, 15)
 
+def test_add_product_empty_name():
+     with pytest.raises(ValueError,  match="Product ID and name are required"):
+          add_product("1", "", 400, 15)
 
+def test_add_product_neg_price():
+     with pytest.raises(ValueError,  match="Price must be positive"):
+          add_product("1", "laptop", -400, 15)
+
+def test_add_product_doublicate():
+     add_product("1", "laptop", 400, 15)
+     with pytest.raises(ValueError,  match="Product '1' already exists"):
+          add_product("1", "pc", 1000, 12)
+
+def test_update_stock_neg_stock():
+     add_product("1", "laptop", 400, 5)
+     with pytest.raises(ValueError,  match="Stock cannot go below zero"):
+          update_stock("1", -10)
+
+def test_calculate_total_wrong_quantity():
+      add_product("1", "laptop", 400, 15)
+      with pytest.raises(ValueError,  match="Quantity must be positive"):
+           calculate_total("1", -16)
 # ============================================================
 # PART C - Fixtures and Parametrize (10 marks)
 #
