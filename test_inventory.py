@@ -155,6 +155,22 @@ def test_calculate_total_wrong_quantity():
 # C1: Create a @pytest.fixture called "sample_products" that
 #     adds 3 products to the inventory and returns their IDs.
 #     Write 2 tests that use this fixture.
+@pytest.fixture
+def sample_products():
+     add_product("1", "laptop", 999.99, 10)
+     add_product("2", "PC", 29.99, 50)
+     add_product("3", "phone", 79.99, 25)
+
+     return ["1", "2", "3"]
+
+def test_sample_product_list(sample_products):
+    
+     prod = sample_products
+     assert len(prod) == 3
+
+def test_calculate_total_sample_products(sample_products):
+     sum = calculate_total(sample_products[1], 2)
+     assert sum == 59.98    
 #
 # C2: Use @pytest.mark.parametrize to test apply_bulk_discount
 #     with at least 5 different (total, quantity, expected) combos.
