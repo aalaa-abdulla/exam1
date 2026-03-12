@@ -46,6 +46,81 @@ def clean_inventory(tmp_path, monkeypatch):
 
 # TODO: Write your Part A tests here
 
+def test_add_product():
+    product_id = "1"
+    name = "laptop"
+    price = 400
+    stock = 1
+
+    results = add_product(product_id, name, price, stock)
+
+    assert results["product_id"] == "1"
+    assert results["name"] == "laptop"
+    assert results["price"] == 400
+    assert results["stock"] == 1
+
+def test_add_product_two():
+        product_id = "2"
+        name = "PC"
+        price = 1000
+        stock = 10
+
+        results = add_product(product_id, name, price, stock)
+
+        assert results["product_id"] == "2"
+        assert results["name"] == "PC"
+        assert results["price"] == 1000
+        assert results["stock"] == 10
+
+def test_add_product_three():
+        product_id = "3"
+        name = "phone"
+        price = 500
+        stock = 12
+
+        results = add_product(product_id, name, price, stock)
+
+        assert results["product_id"] == "3"
+        assert results["name"] == "phone"
+        assert results["price"] == 500
+        assert results["stock"] == 12
+
+def test_get_product():
+    add_product("1", "laptop", 400, 1)
+    results = get_product("1") 
+
+    assert results["product_id"] == "1"
+    assert results["name"] == "laptop"
+    assert results["price"] == 400
+    assert results["stock"] == 1
+
+def test_get_prodcut_none():
+    assert get_product("9") is None
+
+def test_update_stock():
+     add_product("1", "laptop", 400, 20)
+     new = update_stock("1",5)
+     assert new == 25 
+     new = update_stock("1", -10)
+     assert new == 15
+
+def test_calculate_total():
+    add_product("1", "laptop", 9.99, 20)
+    sum = calculate_total("1", 3)
+    assert sum == 29.97
+
+def test_list_products():
+    add_product("1", "laptop", 400, 15)
+    add_product("2", "PC", 1000, 10)
+    prod = list_products()
+    assert len(prod) == 2
+
+
+
+
+
+
+
 
 # ============================================================
 # PART B - Exception Testing (12 marks)
