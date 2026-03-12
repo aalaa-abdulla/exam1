@@ -198,6 +198,21 @@ def test_apply_bulk_discount(sum, quantity, expected_result):
 # ============================================================
 
 # TODO: Write your Part D tests here
+def test_restock_alert_is_called():
+    add_product("1", "laptop", 400, 6)
+    with patch("inventory._send_restock_alert") as mock_alerted:
+        new_stock = update_stock("1", -3)
+        assert new_stock == 3
+        mock_alerted.assert_called_once_with("1", "laptop", 3)
+
+def test_restock_alert_is_not_called():
+    add_product("1", "laptop", 400, 20)
+
+    with patch("inventory._send_restock_alert") as mock_alerted:
+        new_stock = update_stock("1", -5)
+
+        assert new_stock == 15
+        mock_alerted.assert_not_called()
 
 
 # ============================================================
